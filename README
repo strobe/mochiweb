@@ -7,3 +7,12 @@ The master of MochiWeb is tested with R13B04 and later. A branch compatible
 with R12B is maintained separately at http://github.com/lemenkov/mochiweb
 The R12B branch of that repository is mirrored in the official repository
 occasionally for convenience.
+
+--------------------------------------------------------------------------
+to create new project on windows (Vista or Win 7 
+(on WinXP you need after run new_mochiweb.erl manually create syslink in "deps" directory to "mochiweb" folder with any utils creating systemlink on XP)):
+%cd scripts
+and run
+%escript.exe new_mochiweb.erl appname
+this create "appname" folder in "scripts" directory with you project
+to run it - start "start-dev.bat" and go to http://localhost:8000
