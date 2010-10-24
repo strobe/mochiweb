@@ -13,7 +13,7 @@ occasionally for convenience.
 2. make mochiweb with msys or cygwin
 
 to create new project on windows (Vista or Win 7 
-(on WinXP you need after run new_mochiweb.erl manually create syslink in "deps" directory to "mochiweb" folder with any utils creating systemlink on XP)):
+(on WinXP you need after run new_mochiweb.erl manually create syslink in "deps" directory to "mochiweb" folder with any utils creating systemlink on XP(or copy mochiweb folder))):
 
 %cd scripts
 
