@@ -8,8 +8,9 @@ with R12B is maintained separately at http://github.com/lemenkov/mochiweb
 The R12B branch of that repository is mirrored in the official repository
 occasionally for convenience.
 
---------------------------------------------------------------------------
-first you need install win openSSl (http://www.slproweb.com/products/Win32OpenSSL.html)
+-------------------------------------------------------------------------
+1. you need install win openSSl (http://www.slproweb.com/products/Win32OpenSSL.html)
+2. make mochiweb with msys or cygwin
 
 to create new project on windows (Vista or Win 7 
 (on WinXP you need after run new_mochiweb.erl manually create syslink in "deps" directory to "mochiweb" folder with any utils creating systemlink on XP)):
@@ -19,5 +20,6 @@ to create new project on windows (Vista or Win 7
 and run
 
 %escript.exe new_mochiweb.erl appname
+
 this create "appname" folder in "scripts" directory with you project
 to run it - start "start-dev.bat" and go to http://localhost:8000
