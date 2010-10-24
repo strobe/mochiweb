@@ -1,6 +1,7 @@
 -module(mochiweb_skel).
 -export([skelcopy/2]).
 
+
 -include_lib("kernel/include/file.hrl").
 
 %% External API
@@ -16,11 +17,37 @@ skelcopy(DestDir, Name) ->
     skelcopy(src(), DestDir, Name, LDst),
     DestLink = filename:join([DestDir, Name, "deps", "mochiweb-src"]),
     ok = filelib:ensure_dir(DestLink),
-    ok = file:make_symlink(
-           filename:join(filename:dirname(code:which(?MODULE)), ".."),
-           DestLink).
+    %
+    case os:type() of
+        {win32,_} ->
+            {ok, Cwd} = file:get_cwd(),
+            mk_win_dir_syslink(Name, "mochiweb", Cwd ++ "/../"),
+            mk_bat_file(Name, Cwd);
+        {unix,_} ->
+            ok = file:make_symlink(
+            filename:join(filename:dirname(code:which(?MODULE)), ".."),
+            DestLink)
+    end.
 
 %% Internal API
+
+%% @doc Make symbolik link in current directory on windows vista or highter
+mk_win_dir_syslink(ProjectName, LinkName,DestLink) ->
+    %io:format("~nname:~p~ntarget:~p~n~n", [LinkName, DestLink]),
+    S = (list_to_atom("cd "++ ProjectName ++ "//deps" ++ "& mklink /D " ++ LinkName ++ " " ++ "\"" ++ DestLink ++ "\"")),
+    %io:format("~n~p~n", [S]),
+    os:cmd(S),
+    ok.
+
+%% @doc make .bat file to start dev server on windows
+mk_bat_file(ProjectName, Cwd) ->
+    Name = "start-dev.bat",
+    Content = "make \n"
+"start werl -pa ebin deps/*/ebin -boot start_sasl -s " ++ ProjectName ++ " -s \n"
+"reloader ",
+    file:set_cwd(Cwd ++ "//" ++ ProjectName),
+    {ok, IODevice} = file:open(Name, [write]), file:write(IODevice, Content), file:close(IODevice),
+    ok.
 
 src() ->
     Dir = filename:dirname(code:which(?MODULE)),
